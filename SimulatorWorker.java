@@ -93,14 +93,14 @@ public class SimulatorWorker extends Thread {
         ArrayList<String> words = wordList;
         String wordle = randomWord(words);
         String word = firstWord;
-        int score = 6;
+        int score = 1;
         for (int i = 0; i < 6; i++) {
             if (checkWord(word, wordle)) {
                 break;
             }
             words = filteredWordList();
             word = randomWord(words);
-            score--;
+            score++;
         }
         return score;
     }

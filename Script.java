@@ -41,7 +41,7 @@ public class Script {
     public static double[] runSim(ArrayList<String> wordList) {
         double[] scores = new double[wordList.size()];
         int NUM_THREADS = 100;
-        int SIM_COUNT = 750;
+        int SIM_COUNT = 5000;
         int wordsPerThread = wordList.size() / NUM_THREADS;
         ArrayList<SimulatorWorker> workers = new ArrayList<>();
 
