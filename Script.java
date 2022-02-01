@@ -41,7 +41,7 @@ public class Script {
     public static double[] runSim(ArrayList<String> wordList) {
         double[] scores = new double[wordList.size()];
         int NUM_THREADS = 100;
-        int SIM_COUNT = 5000;
+        int SIM_COUNT = 1000;
         int wordsPerThread = wordList.size() / NUM_THREADS;
         ArrayList<SimulatorWorker> workers = new ArrayList<>();
 
@@ -78,7 +78,7 @@ public class Script {
 
         int best = 0;
         for (int i = 0; i < scores.length; i++) {
-            if (scores[best] < scores[i]) {
+            if (scores[best] > scores[i]) {
                 best = i;
             }
         }
