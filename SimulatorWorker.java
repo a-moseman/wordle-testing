@@ -5,6 +5,7 @@ public class SimulatorWorker extends Thread {
     private ArrayList<String> wordList;
     private ArrayList<Character> wrongLetters;
     private ArrayList<Character> correctLetters;
+    private ArrayList<ArrayList<String>> wrongPlacements;
     private String[] correctPlacements;
     private Random random;
     private int start;
@@ -16,6 +17,10 @@ public class SimulatorWorker extends Thread {
         this.wordList = wordList;
         this.wrongLetters = new ArrayList<>();
         this.correctLetters = new ArrayList<>();
+        this.wrongPlacements = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            this.wrongPlacements.add(new ArrayList<>());
+        }
         this.correctPlacements = new String[5];
         this.random = new Random();
         this.start = start;
@@ -26,6 +31,10 @@ public class SimulatorWorker extends Thread {
     private void reset() {
         wrongLetters.clear();
         correctLetters.clear();
+        wrongPlacements.clear();
+        for (int i = 0; i < 5; i++) {
+            this.wrongPlacements.add(new ArrayList<>());
+        }
         correctPlacements = new String[5];
     }
 
@@ -39,6 +48,9 @@ public class SimulatorWorker extends Thread {
                 correctPlacements[i] = "" + word.charAt(i);
             } else if (wordle.contains("" + word.charAt(i))) {
                 correctLetters.add(word.charAt(i));
+                // Is correct but wrong placement
+                wrongPlacements.get(i).add("" + word.charAt(i));
+
             } else {
                 wrongLetters.add(word.charAt(i));
             }
@@ -80,6 +92,17 @@ public class SimulatorWorker extends Thread {
                 }
             }
             if (containsWrongLetter) {
+                continue;
+            }
+
+            // TODO: Filter out words that contain a wrong placement
+            boolean containsWrongPlacement = false;
+            for (int i = 0; i < 5; i++) {
+                if (wrongPlacements.get(i).contains("" + word.charAt(i))) {
+                    containsWrongPlacement = true;
+                }
+            }
+            if (containsWrongPlacement) {
                 continue;
             }
 
